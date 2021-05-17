@@ -1,0 +1,98 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+/* BACKGROUND IMAGE AND OVERLAY */
+.bg-img {
+  background-image: url(/static/images/pexels-charlotte-may-5825595.jpg);
+  height: 100vh;
+  width: 100vw;
+  position: absolute;
+  overflow: hidden;
+}
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+}
+/* PROJECT NAME */
+.main-heading {
+  font-family: "Source Code Pro", monospace;
+  width: 100vw;
+  text-align: center;
+  font-size: 60px;
+  margin-top: 40px;
+  margin-left: 20px;
+  position: relative;
+  color: rgb(250, 250, 250);
+}
+.intro {
+  font-family: "Lato", sans-serif;
+  position: relative;
+  color: rgb(250, 250, 250);
+  width: 100vw;
+  text-align: center;
+  margin-left: 10px;
+}
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+  margin-left: 33rem;
+  margin-top: 40px;
+}
+.login-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  background: none;
+  margin-bottom: 30px;
+}
+.signup-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  background: none;
+  color: rgb(250, 250, 250);
+}
+button {
+  background: none;
+  border: none;
+  text-decoration: none;
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+  width: 260px;
+  height: 60px;
+  border-radius: 30px;
+  background: white;
+  cursor: pointer;
+}
+#signbtn {
+  background: none;
+  color: rgb(250, 250, 250);
+  border: 2px solid rgb(250, 250, 250);
+}
+#signbtn:hover {
+  background: black;
+  color: rgb(250, 250, 250);
+  border: none;
+}
+button:hover {
+  background: none;
+  border: 2px solid rgb(250, 250, 250);
+  color: rgb(250, 250, 250);
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/sign.css">
+</head>
+<body>
+    <div class="bg-img">
+        <div class="overlay"></div>
+    </div>
+    <div class="main-heading">
+        <h1>DWEB</h1>
+    </div>
+    <form class="box" action="{{ url_for("home") }}">
+        <div class="heading">
+            <h1>Signup</h1>
+        </div>
+        <div class="new-u-name">
+            
+            <input id="input1"class="input"type="text" placeholder="Username" name="new-uname" required>
+        </div>
+        <div class="new-email">
+            
+            <input id="input2"class="input"type="text" name="new-mail" placeholder="Enter Email ID" required>
+        </div>
+        <div class="new-pass">
+            
+            <input id="input3"class="input"type="password" placeholder="Password" name="new-psw">
+        </div>
+        <div class="new-pass">
+            
+            <input class="input"type="password" placeholder="Confirm Password" name="new-psw">
+        </div>
+        <div class="submit">
+            <button type="submit">Signup</button>
+        </div>
+    </form>
+</body>
+
+</html>

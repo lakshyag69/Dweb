@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/static/login.css">
+</head>
+<body>
+    <div class="bg-img">
+        <div class="overlay"></div>
+    </div>
+    <div class="main-heading">
+        <h1>DWEB</h1>
+    </div>
+    <form class="box" action="{{ url_for("index") }}" method="post">
+        <div class="heading">
+            <h1>Login</h1>
+        </div>
+        <div class="u-name">
+            
+            <input class="input" type="text" placeholder="Enter Username" name="uname" required>
+        </div>
+        <div class="email">
+            
+            <input id="in-email"class="input" type="text" name="mail" placeholder="Enter Email ID">
+        </div>
+        <div class="pass">
+            
+            <input class="input" type="password" placeholder="Enter Password" name="psw">
+        </div>
+        <div class="submit">
+            <button class="login" onclick="window.location.href='console.html';">Login</button>
+        </div>
+        <div class="forgot">
+	    <span class="psw">Forgot <a href="{{ url_for("pass_reset") }}">password?</a></span>
+        </div>
+        <div class="new-user">
+	    <h4>New user, signup <a href="{{ url_for("login") }}">here.</a></h4>
+        </div>
+    </form>
+</body>
+</html>
