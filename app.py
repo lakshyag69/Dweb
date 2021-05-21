@@ -65,6 +65,6 @@ def launch():
     z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
     return redirect(url_for("index"), code=307)
 
-app.run(host='localhost', port=80, debug=True)
+app.run(host='0.0.0.0', port=80, debug=True)
 
 
