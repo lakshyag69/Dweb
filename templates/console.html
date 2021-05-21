@@ -7,6 +7,7 @@
     <title>Console</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/icons/css/all.min.css">
     <link rel="stylesheet" href="/static/console.css">
 </head>
 <body>
@@ -17,7 +18,7 @@
             <h1>DWEB</h1>
         </div>
         <div class="new-button">
-            <button   type="submit">New Project</button>
+            <button   type="submit" onclick="window.location.href='{{ url_for("project") }}';"><i class="fas fa-plus">New Project</button>
         </div>
         <table border='5' width='100%'>
             <tr>

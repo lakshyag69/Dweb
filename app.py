@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import subprocess
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
+from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -50,16 +51,20 @@ def index():
 def pass_reset():
     return render_template("password-reset.html")
 
+@app.route("/project")
+def project():
+    return render_template("project.html")
+
 
 @app.route("/launch", methods=["POST"])
-def doc_start():
+def launch():
     c_name=request.form.get("x")
-    x=subprocess.getoutput("sudo docker run -d -i -t  --name {} party:latest".format(cname))
-    ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(cname))
+    x=subprocess.getoutput("sudo docker run -d -i -t  --name {} party:latest".format(c_name))
+    ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(c_name))
     y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
     z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
-    return redirect(url_for('doc_home'))
+    return redirect(url_for("index"), code=307)
 
-app.run(host='0.0.0.0', port=80, debug=True)
+app.run(host='localhost', port=80, debug=True)
 
 

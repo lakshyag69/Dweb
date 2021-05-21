@@ -8,6 +8,7 @@
     <title>Signup</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/icons/css/all.min.css">
     <link rel="stylesheet" href="/static/sign.css">
 </head>
 <body>
@@ -17,24 +18,24 @@
     <div class="main-heading">
         <h1>DWEB</h1>
     </div>
-    <form class="box" action="{{ url_for("home") }}">
+    <form class="box">
         <div class="heading">
             <h1>Signup</h1>
         </div>
         <div class="new-u-name">
-            
+            <i class="far fa-user"></i>
             <input id="input1"class="input"type="text" placeholder="Username" name="new-uname" required>
         </div>
         <div class="new-email">
-            
+            <i class="far fa-envelope"></i>
             <input id="input2"class="input"type="text" name="new-mail" placeholder="Enter Email ID" required>
         </div>
         <div class="new-pass">
-            
+            <i class="fas fa-lock"></i>
             <input id="input3"class="input"type="password" placeholder="Password" name="new-psw">
         </div>
         <div class="new-pass">
-            
+            <i class="fas fa-lock"></i>
             <input class="input"type="password" placeholder="Confirm Password" name="new-psw">
         </div>
         <div class="submit">

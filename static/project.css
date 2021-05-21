@@ -22,6 +22,7 @@ body {
   height: 100vh;
   width: 100vw;
 }
+
 /* PROJECT NAME */
 .main-heading {
   font-family: "Source Code Pro", monospace;
@@ -31,7 +32,7 @@ body {
   position: relative;
   color: rgb(250, 250, 250);
 }
-/* SIGNUP HEADING */
+/* Project Details Heading */
 .heading {
   margin-bottom: 40px;
   margin-top: 20px;
@@ -42,10 +43,10 @@ body {
   font-family: "Poppins", sans-serif;
   border-bottom: 2px solid black;
 }
-/* SIGNUP SECTION */
+/* BOX */
 .box {
-  width: 400px;
-  height: 440px;
+  width: 440px;
+  height: 580px;
   text-align: center;
   background: rgba(255, 255, 255, 0.5);
   display: flex;
@@ -60,9 +61,6 @@ body {
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   position: relative;
   border-radius: 10px;
-}
-b {
-  font-size: 18px;
 }
 .input {
   width: 300px;
@@ -79,14 +77,14 @@ b {
 ::placeholder {
   color: black;
 }
-/* SIGNUP BUTTON */
+/* LAUNCH BUTTON */
 button {
   width: 300px;
   height: 34px;
   margin-top: 30px;
   margin-left: 10px;
   border-radius: 20px;
-  background: rgb(250, 250, 250);
+  background: #ffffff;
   color: black;
   font-family: "Poppins", sans-serif;
   font-size: 16px;
@@ -98,7 +96,28 @@ button:hover {
   background: black;
   color: rgb(250, 250, 250);
 }
+.type-of-pro {
+  margin-top: 10px;
+  border-bottom: 2px solid black;
+  width: 300px;
+}
+.os-type {
+  margin-top: 10px;
+  border-bottom: 2px solid black;
+  width: 300px;
+}
+.rd-btn {
+  font-family: "Poppins", sans-serif;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  background: black;
+}
+label {
+  margin-right: 20px;
+}
 /* ICONS */
 i {
   font-size: 20px;
 }
+

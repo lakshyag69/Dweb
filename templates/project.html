@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/icons/css/all.min.css">
+    <link rel="stylesheet" href="/static/project.css">
+</head>
+<body>
+    <div class="bg-img">
+        <div class="overlay"></div>
+    </div>
+    <div class="main-heading">
+        <h1>DWEB</h1>
+    </div>
+    <form class="box" action="{{ url_for("launch") }}" method="POST">
+        <div class="heading">
+            <h1>Project Details</h1>
+        </div>
+        <div class="project-name">
+            <i class="far fa-folder"></i>
+            <input type="text" class="input" placeholder="Project Name">
+        </div>
+        <div class="git-link">
+            <i class="fab fa-github"></i>
+            <input type="text" class="input" placeholder="GitHub Link">
+        </div>
+        <div class="type-of-pro">
+            <h3>Select the project type:</h3>
+            <input type="radio" class="rd-btn" id="html" name="project-type"value="HTML">
+            <label for="html">HTML</label>
+            <input type="radio" class="rd-btn" id="php" name="project-type"value="php">
+            <label for="php">php</label>
+        </div>
+        <div class="os-type">
+            <h3>Select OS type:</h3><input type="radio" class="rd-btn" id="centos" name="os" value="centos">
+            <label for="centos">Centos</label>
+            <input type="radio" class="rd-btn" id="ubuntu" name="os"value="ubuntu">
+            <label for="ubuntu">Ubuntu</label>
+        </div>
+        <div class="launch">
+            <button class="launch-project">Launch</button>
+        </div>
+    </form>
+</body>
+</html>
