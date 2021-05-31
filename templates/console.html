@@ -30,18 +30,34 @@
                 <th>Terminate</th>
                 <th>Console</th>
             </tr>
+{% for c in c_list %}
+  {% if "Up" in c %}
+    {% set cstatus = "running" %}
+    the container is running
+  {% elif "Exited" in c %}
+    {% set cstatus = "stopped" %}
+    the container is stopped
+  {% else %}
+    {% set cstatus = "unknown" %}
+    unknown status
+  {% endif %}
 
-            <tr>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td><a href='http://localhost/cgi-bin/dockersto.py?s={}'>Start</a></td>
-                <td><a href='http://localhost/cgi-bin/dockersta.py?s={}'>Stop</a></td>
-                <td><a href='http://localhost/cgi-bin/dockerter.py?s={}'>Terminate</a></td>
-                <td><a target='myconsole' href='http://{}:4200'>Console</a></td>
-            </tr>
-        </table>
 
+  {% set c_details  =  c.split() %}
+  {% set cname =  c_details[-1] %}
+  {% set imagename = c_details[1] %}
+
+<tr>
+<td>{{ cname }}</td>
+<td>{{ imagename }}</td>
+<td>{{ cstatus }}</td>
+<td><a href="{{ url_for("doc_start") }}">Start</a></td>
+<td><a href="{{ url_for("doc_stop") }}">Stop</a></td>
+<td><a href="{{ url_for("doc_terminate") }}">Terminate</a></td>
+<td><a target='myconsole' href='http://:4200'>Console</a></td>
+</tr>
+{% endfor %}
+</table>
 
 </body>
 </html>

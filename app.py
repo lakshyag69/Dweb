@@ -103,12 +103,9 @@ def auth():
 @app.route("/index", methods=['POST', 'GET'])
 @login_required
 def index():       
-    cmd = "sudo docker ps --all"
+    cmd = "sudo docker ps --all | grep "+current_user.uname
     output = subprocess.getoutput(cmd)
     container_list = output.split("\n")
-    uname=request.form.get("new-uname")
-    email=request.form.get("new-mail")
-    psw=request.form.get("new-psw")
     return render_template("console.html", c_list=container_list)
 
 
@@ -119,6 +116,17 @@ def pass_reset():
 @app.route("/project")
 def project():
     return render_template("project.html")
+
+@app.route("/start")
+def doc_start():
+    return redirect(url_for('index'))
+
+@app.route("/stop")
+def doc_stop():
+    return redirect(url_for('index'))
+@app.route("/terminate")
+def doc_terminate():
+    return redirect(url_for('index'))
 
 
 @app.route("/launch", methods=["POST"])
