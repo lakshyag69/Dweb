@@ -1,14 +1,20 @@
 #!/usr/bin/python3
 import subprocess
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask.helpers import url_for
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_login import LoginManager
+from flask_login import UserMixin
+from flask_login import current_user
+from flask_login import login_user, logout_user
+from flask_login import login_required
+from sqlalchemy.util.langhelpers import methods_equivalent
 
 app=Flask("myapp")
 app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///data/data.sqlite"
 db=SQLAlchemy(app)
-class Users(db.Model):
+U_login=LoginManager(app)
+class Users(UserMixin, db.Model):
     id=db.Column(db.Integer, primary_key=True)
     uname=db.Column(db.Text)
     email=db.Column(db.Text)
@@ -21,6 +27,11 @@ class Users(db.Model):
 
 db.create_all()
 
+@U_login.user_loader
+def load_user(id):
+    return Users.query.get(int(id))
+
+
 @app.route("/")
 def home():
     return render_template("start.html")
@@ -30,15 +41,58 @@ def home():
 def signup():
     return render_template("signup.html")
 
+@app.route("/uadd", methods=["POST"])
+def uadd():
+        email = request.form.get('new-mail')
+        uname = request.form.get('new-uname')
+        password = request.form.get('new-psw')
+
+        user = Users.query.filter_by(email=email).first()
+        if user:
+            flash('Email already exists.', category='error')
+        elif len(email) < 4:
+            flash('Email must be greater than 3 characters.', category='error')
+        elif len(uname) < 2:
+            flash('First name must be greater than 1 character.', category='error')
+        elif len(password) < 7:
+            flash('Password must be at least 7 characters.', category='error')
+        else:
+            new_user = Users(uname=uname, email=email, passwd=password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created!', category='success')
+        return redirect(url_for('home'))
+
 
 @app.route("/login")
 def login():
+#    if current_user.is_authenticated:
+#      return redirect(url_for('index'))
     return render_template("login.html")
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
 @app.route("/index", methods=["POST"])
 def index():
-    cmd=cmd = "sudo docker ps --all"
+    if request.method == 'POST':
+        email = request.form.get('mail')
+        password = request.form.get('psw')
+
+        user = Users.query.filter_by(email=email).first()
+        if user:
+            if password == user.passwd:
+                login_user(user, remember=True)
+            else:
+                redirect(url_for('login'))
+        else:
+            redirect(url_for('login'))
+            
+    cmd = "sudo docker ps --all"
     output = subprocess.getoutput(cmd)
     container_list = output.split("\n")
     uname=request.form.get("new-uname")
@@ -65,6 +119,6 @@ def launch():
     z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
     return redirect(url_for("index"), code=307)
 
-app.run(host='0.0.0.0', port=80, debug=True)
+app.run(host='localhost', port=80, debug=True)
 
 

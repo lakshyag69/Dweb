@@ -17,7 +17,7 @@
     <div class="main-heading">
         <h1>DWEB</h1>
     </div>
-    <form class="box" action="{{ url_for("index") }}" method="POST">
+    <form class="box" action="{{ url_for('index') }}" method="POST">
         <div class="heading">
             <h1>Login</h1>
         </div>
@@ -37,10 +37,10 @@
             <button class="login" onclick="window.location.href='{{ url_for("index") }}';">Login</button>
         </div>
         <div class="forgot">
-            <span class="psw">Forgot <a href="{{ url_for("pass_reset") }}">password?</a></span>
+            <span class="psw">Forgot <a href="{{ url_for('pass_reset') }}">password?</a></span>
         </div>
         <div class="new-user">
-            <h4>New user, signup <a href="{{ url_for("signup") }}">here.</a></h4>
+            <h4>New user, signup <a href="{{ url_for('signup') }}">here.</a></h4>
         </div>
     </form>
 </body>
