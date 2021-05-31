@@ -97,7 +97,7 @@ def auth():
 @app.route("/index", methods=["POST"])
 @login_required
 def index():       
-    cmd = "docker ps --all | grep"
+    cmd = "docker ps --all"
     output = subprocess.getoutput(cmd)
     container_list = output.split("\n")
     uname=request.form.get("new-uname")
