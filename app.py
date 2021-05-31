@@ -11,7 +11,8 @@ from flask_login import login_required
 from sqlalchemy.util.langhelpers import methods_equivalent
 
 app=Flask("myapp")
-app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///data/data.sqlite"
+app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
+app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///data/data1.sqlite"
 db=SQLAlchemy(app)
 U_login=LoginManager(app)
 class Users(UserMixin, db.Model):
@@ -54,14 +55,13 @@ def uadd():
             flash('Email must be greater than 3 characters.', category='error')
         elif len(uname) < 2:
             flash('First name must be greater than 1 character.', category='error')
-        elif len(password) < 7:
-            flash('Password must be at least 7 characters.', category='error')
         else:
+            print("this is running")
             new_user = Users(uname=uname, email=email, passwd=password)
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
-        return redirect(url_for('home'))
+            return redirect(url_for('home'))
 
 
 @app.route("/login")
@@ -81,23 +81,29 @@ def logout():
 def auth():
     email = request.form.get('mail')
     password = request.form.get('psw')
+    c="no"
 
     user = Users.query.filter_by(email=email).first()
     if user:
-        if password == user.passwd:
+        c="first"
+        if user.passwd == password:
             login_user(user, remember=True)
-            redirect(url_for('index'))
+            c="second"
+            return redirect(url_for('index'))
         else:
-                redirect(url_for('login'))
+            c="third"
+            return redirect(url_for('login'))
     else:
-        redirect(url_for('login'))
+        c="fourth"
+        return redirect(url_for('login'))
+    return c
 
 
 
-@app.route("/index", methods=["POST"])
+@app.route("/index", methods=['POST', 'GET'])
 @login_required
 def index():       
-    cmd = "docker ps --all"
+    cmd = "sudo docker ps --all"
     output = subprocess.getoutput(cmd)
     container_list = output.split("\n")
     uname=request.form.get("new-uname")
