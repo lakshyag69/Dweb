@@ -77,22 +77,27 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route("/index", methods=["POST"])
-def index():
-    if request.method == 'POST':
-        email = request.form.get('mail')
-        password = request.form.get('psw')
+@app.route("/auth", methods=["POST"])
+def auth():
+    email = request.form.get('mail')
+    password = request.form.get('psw')
 
-        user = Users.query.filter_by(email=email).first()
-        if user:
-            if password == user.passwd:
-                login_user(user, remember=True)
-            else:
-                redirect(url_for('login'))
+    user = Users.query.filter_by(email=email).first()
+    if user:
+        if password == user.passwd:
+            login_user(user, remember=True)
+            redirect(url_for('index'))
         else:
-            redirect(url_for('login'))
-            
-    cmd = "sudo docker ps --all"
+                redirect(url_for('login'))
+    else:
+        redirect(url_for('login'))
+
+
+
+@app.route("/index", methods=["POST"])
+@login_required
+def index():       
+    cmd = "docker ps --all | grep"
     output = subprocess.getoutput(cmd)
     container_list = output.split("\n")
     uname=request.form.get("new-uname")
@@ -112,13 +117,17 @@ def project():
 
 @app.route("/launch", methods=["POST"])
 def launch():
-    c_name=request.form.get("x")
-    x=subprocess.getoutput("sudo docker run -d -i -t  --name {} party:latest".format(c_name))
+    P_name=request.form.get("Pname")
+    github=request.form.get("Gitlink")
+    projectType=request.form.get("project-type")
+    os=request.form.get("os")
+    c_name=current_user.uname+"-"+P_name
+    x=subprocess.getoutput("sudo docker run -d -i -t  --name {} centos:latest".format(c_name))
     ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(c_name))
-    y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
-    z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
+    #y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
+    #z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
     return redirect(url_for("index"), code=307)
 
-app.run(host='localhost', port=80, debug=True)
+app.run(host='0.0.0.0', port=80, debug=True)
 
 

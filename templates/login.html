@@ -17,7 +17,7 @@
     <div class="main-heading">
         <h1>DWEB</h1>
     </div>
-    <form class="box" action="{{ url_for('index') }}" method="POST">
+    <form class="box" action="{{ url_for('auth') }}" method="POST">
         <div class="heading">
             <h1>Login</h1>
         </div>
@@ -34,7 +34,7 @@
             <input class="input" type="password" placeholder="Enter Password" name="psw">
         </div>
         <div class="submit">
-            <button class="login" onclick="window.location.href='{{ url_for("index") }}';">Login</button>
+            <button class="login" onclick="window.location.href='{{ url_for("auth") }}';">Login</button>
         </div>
         <div class="forgot">
             <span class="psw">Forgot <a href="{{ url_for('pass_reset') }}">password?</a></span>
