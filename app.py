@@ -61,6 +61,7 @@ def uadd():
             db.session.add(new_user)
             db.session.commit()
             flash('Account created!', category='success')
+            out=subprocess.getoutput("mkdir /root/dweb-projects/"+uname)
             return redirect(url_for('home'))
 
 
@@ -136,7 +137,10 @@ def launch():
     projectType=request.form.get("project-type")
     os=request.form.get("os")
     c_name=current_user.uname+"-"+P_name
-    x=subprocess.getoutput("sudo docker run -d -i -t  --name {} centos:latest".format(c_name))
+    DIR="/root/dweb-projects/"+current_user.uname+"/"+P_name
+    out=subprocess.getoutput("mkdir "+DIR)
+    clone=subprocess.getoutput("git clone "+github+" "+DIR)
+    x=subprocess.getoutput("sudo docker run -dit -P -v {}:/var/www/html  --name {} dweb:v1".format(DIR, c_name))
     ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(c_name))
     #y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
     #z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
