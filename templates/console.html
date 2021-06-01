@@ -23,12 +23,12 @@
         <table border='5' width='100%'>
             <tr>
                 <th>Project Name</th>
-                <th>Image Name</th>
+                <th>OS</th>
                 <th>Status</th>
                 <th>Start</th>
                 <th>Stop</th>
                 <th>Terminate</th>
-                <th>Console</th>
+                <th>Port</th>
             </tr>
 {% for c in c_list %}
   {% if "Up" in c %}
@@ -45,16 +45,17 @@
 
   {% set c_details  =  c.split() %}
   {% set cname =  c_details[-1] %}
+  {% set port =  c_details[-2].split(':')[1] %}
   {% set imagename = c_details[1] %}
 
 <tr>
 <td>{{ cname }}</td>
 <td>{{ imagename }}</td>
 <td>{{ cstatus }}</td>
-<td><a href="{{ url_for("doc_start") }}">Start</a></td>
-<td><a href="{{ url_for("doc_stop") }}">Stop</a></td>
-<td><a href="{{ url_for("doc_terminate") }}">Terminate</a></td>
-<td><a target='myconsole' href='http://:4200'>Console</a></td>
+<td><a href="/start/{{ cname }}">Start</a></td>
+<td><a href="/stop/{{ cname }}">Stop</a></td>
+<td><a href="/terminate/{{ cname }}">Terminate</a></td>
+<td>{{ port }}</td>
 </tr>
 {% endfor %}
 </table>

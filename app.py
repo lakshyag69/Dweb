@@ -106,6 +106,8 @@ def auth():
 def index():       
     cmd = "sudo docker ps --all | grep "+current_user.uname
     output = subprocess.getoutput(cmd)
+    if len(output) == 0:
+        return render_template("console.html", c_list=output)
     container_list = output.split("\n")
     return render_template("console.html", c_list=container_list)
 
@@ -118,15 +120,18 @@ def pass_reset():
 def project():
     return render_template("project.html")
 
-@app.route("/start")
+@app.route("/start/<name>")
 def doc_start():
+    stop=subprocess.getoutput("docker start "+name)
     return redirect(url_for('index'))
 
-@app.route("/stop")
-def doc_stop():
+@app.route("/stop/<name>")
+def doc_stop(name):
+    stop=subprocess.getoutput("docker stop "+name)
     return redirect(url_for('index'))
-@app.route("/terminate")
-def doc_terminate():
+@app.route("/terminate/<name>")
+def doc_terminate(name):
+    terminate=subprocess.getoutput("docker rm -f "+name)
     return redirect(url_for('index'))
 
 
