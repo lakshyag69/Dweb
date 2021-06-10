@@ -17,6 +17,7 @@
         <div class="main-heading">
             <h1>DWEB</h1>
         </div>
+
         <div class="new-button">
             <button   type="submit" onclick="window.location.href='{{ url_for("project") }}';"><i class="fas fa-plus">New Project</button>
         </div>
@@ -25,12 +26,13 @@
                 <th>Project Name</th>
                 <th>OS</th>
                 <th>Status</th>
-                <th>Start</th>
-                <th>Stop</th>
+                <th>State</th>
                 <th>Terminate</th>
+                <th>View</th>
                 <th>Port</th>
             </tr>
-{% for c in c_list %}
+	    {% if c_list|length > 1 %}	    
+{% for c in c_list[1:] %}
   {% if "Up" in c %}
     {% set cstatus = "running" %}
     the container is running
@@ -45,20 +47,44 @@
 
   {% set c_details  =  c.split() %}
   {% set cname =  c_details[-1] %}
-  {% set port =  c_details[-2].split(':')[1] %}
+  {% set pname =  c_details[-1].split('-')[1] %}
+  {% if cstatus != "stopped" %}
+  {% set temp =  c_details[-2].split('->')[0] %}
+  {% set port = temp.split(":")[1] %}
+  {% set temp1 =  c_details[-3].split('->')[0] %}
+  {% set view = temp1.split(":")[1] %}
+  {% endif %}
   {% set imagename = c_details[1] %}
 
 <tr>
-<td>{{ cname }}</td>
+<td>{{ pname }}</td>
 <td>{{ imagename }}</td>
 <td>{{ cstatus }}</td>
-<td><a href="/start/{{ cname }}">Start</a></td>
+{% if cstatus != "stopped" %}
 <td><a href="/stop/{{ cname }}">Stop</a></td>
+{% else %}
+<td><a href="/start/{{ cname }}">Start</a></td>
+{% endif %}
 <td><a href="/terminate/{{ cname }}">Terminate</a></td>
-<td>{{ port }}</td>
+{% if cstatus != "stopped" %}
+<td><a target="_blank" href='http://54.82.51.198:{{ view }}'>View</a></td>
+{% else %}
+<td><a>console</a></td>
+{% endif %}
+{% if cstatus != "stopped" %}
+<td><a target="_blank" href='http://54.82.51.198:{{ port }}'>Console</a></td>
+{% else %}
+<td><a>console</a></td>
+{% endif %}
 </tr>
 {% endfor %}
+{% endif %}
 </table>
+<div class="logout-button">
+            <form action="/logout">
+                <button type="submit"><i class="fas fa-sign-out-alt"></i>Logout</button>
+            </form>
+        </div>
 
 </body>
 </html>

@@ -104,10 +104,10 @@ def auth():
 @app.route("/index", methods=['POST', 'GET'])
 @login_required
 def index():       
-    cmd = "sudo docker ps --all | grep "+current_user.uname
+    cmd = "sudo docker ps -a --filter name="+current_user.uname+"*"
     output = subprocess.getoutput(cmd)
-    if len(output) == 0:
-        return render_template("console.html", c_list=output)
+#    if len(output) == 70:
+ #       return render_template("console.html", c_list=output)
     container_list = output.split("\n")
     return render_template("console.html", c_list=container_list)
 
@@ -121,8 +121,9 @@ def project():
     return render_template("project.html")
 
 @app.route("/start/<name>")
-def doc_start():
-    stop=subprocess.getoutput("docker start "+name)
+def doc_start(name):
+    start=subprocess.getoutput("docker start "+name)
+    shellinabox=subprocess.getoutput("docker exec "+name+" /usr/sbin/shellinaboxd --disable-ssl -b")
     return redirect(url_for('index'))
 
 @app.route("/stop/<name>")
@@ -145,7 +146,8 @@ def launch():
     DIR="/root/dweb-projects/"+current_user.uname+"/"+P_name
     out=subprocess.getoutput("mkdir "+DIR)
     clone=subprocess.getoutput("git clone "+github+" "+DIR)
-    x=subprocess.getoutput("sudo docker run -dit -P -v {}:/var/www/html  --name {} dweb:v1".format(DIR, c_name))
+    x=subprocess.getoutput("sudo docker run -dit -P -v {}:/var/www/html  --name {} lakshyag69/dweb-centos:v1".format(DIR, c_name))
+    shellinabox=subprocess.getoutput("docker exec "+c_name+" /usr/sbin/shellinaboxd --disable-ssl -b")
     ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(c_name))
     #y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
     #z=subprocess.getoutput("sudo docker exec -d {} /usr/sbin/shellinaboxd --disable-ssl -b".format(c_name))
