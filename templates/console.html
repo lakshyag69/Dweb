@@ -54,7 +54,7 @@
   {% set temp1 =  c_details[-3].split('->')[0] %}
   {% set view = temp1.split(":")[1] %}
   {% endif %}
-  {% set imagename = c_details[1] %}
+  {% set imagename = c_details[1].split('-')[1] %}
 
 <tr>
 <td>{{ pname }}</td>
@@ -69,12 +69,12 @@
 {% if cstatus != "stopped" %}
 <td><a target="_blank" href='http://54.82.51.198:{{ view }}'>View</a></td>
 {% else %}
-<td><a>console</a></td>
+<td><a>View</a></td>
 {% endif %}
 {% if cstatus != "stopped" %}
 <td><a target="_blank" href='http://54.82.51.198:{{ port }}'>Console</a></td>
 {% else %}
-<td><a>console</a></td>
+<td><a>Console</a></td>
 {% endif %}
 </tr>
 {% endfor %}

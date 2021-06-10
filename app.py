@@ -146,7 +146,7 @@ def launch():
     DIR="/root/dweb-projects/"+current_user.uname+"/"+P_name
     out=subprocess.getoutput("mkdir "+DIR)
     clone=subprocess.getoutput("git clone "+github+" "+DIR)
-    x=subprocess.getoutput("sudo docker run -dit -P -v {}:/var/www/html  --name {} lakshyag69/dweb-centos:v1".format(DIR, c_name))
+    x=subprocess.getoutput("sudo docker run -dit -P -v {}:/var/www/html  --name {} lakshyag69/dweb-{}:v1".format(DIR, c_name, os))
     shellinabox=subprocess.getoutput("docker exec "+c_name+" /usr/sbin/shellinaboxd --disable-ssl -b")
     ip_addr=subprocess.getoutput("sudo docker inspect --format '{{.NetworkSettings.IPAddress}}' {}".format(c_name))
     #y=subprocess.getoutput("sudo docker exec -d {} sed -i 's/lakshyagupta/{}/' /etc/sysconfig/shellinaboxd".format(c_name,ip_addr))
