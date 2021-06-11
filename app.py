@@ -132,6 +132,7 @@ def doc_stop(name):
     return redirect(url_for('index'))
 @app.route("/terminate/<name>")
 def doc_terminate(name):
+    dir_rm=subprocess.getoutput("rm -rf /root/dweb-projects/"+name.split('-')[0]+"/"+name.split('-')[1])
     terminate=subprocess.getoutput("docker rm -f "+name)
     return redirect(url_for('index'))
 

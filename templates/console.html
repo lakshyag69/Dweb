@@ -19,9 +19,11 @@
         </div>
 
         <div class="new-button">
-            <button   type="submit" onclick="window.location.href='{{ url_for("project") }}';"><i class="fas fa-plus">New Project</button>
+            <form action="{{ url_for('project') }}">
+            <button   type="submit"><i class="fas fa-plus"></i>New Project</button>
+            </form>
         </div>
-        <table border='5' width='100%'>
+        <table>
             <tr>
                 <th>Project Name</th>
                 <th>OS</th>
